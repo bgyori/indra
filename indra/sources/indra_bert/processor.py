@@ -1,10 +1,12 @@
+import re
+import logging
+
 from indra.statements import *
 from indra.ontology.standardize import standardize_agent_name
 
-import re
-import logging
+
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.WARNING)
+
 
 class IndraBertProcessor:
     def __init__(self, data, grounder=None):
@@ -63,9 +65,10 @@ class IndraBertProcessor:
             stmt = Complex(members, evidence=[evidence])
             return stmt
         elif issubclass(stmt_class, (RegulateAmount, RegulateActivity)):
-            if agents_by_role.keys() != {'subj', 'obj'} or len(agents_by_role) != 2: 
+            if agents_by_role.keys() != {'subj', 'obj'} or \
+                    len(agents_by_role) != 2:
                 raise ValueError("Expected exactly two roles: 'subj' and 'obj'",
-                                    f" but got {agents_by_role.keys()}")
+                                 f" but got {agents_by_role.keys()}")
 
             subj = agents_by_role.get('subj')
             obj = agents_by_role.get('obj')
@@ -81,9 +84,10 @@ class IndraBertProcessor:
             stmt = stmt_class(subj, obj, evidence=[evidence])
             return stmt
         elif issubclass(stmt_class, Modification):
-            if agents_by_role.keys() != {'enz', 'sub'} or len(agents_by_role) != 2:
+            if agents_by_role.keys() != {'enz', 'sub'} or \
+                    len(agents_by_role) != 2:
                 raise ValueError("Expected exactly two roles: 'enz' and 'sub'",
-                                    f" but got {agents_by_role.keys()}")
+                                 f" but got {agents_by_role.keys()}")
 
             enz = agents_by_role.get('enz')
             sub = agents_by_role.get('sub')
@@ -104,7 +108,7 @@ class IndraBertProcessor:
     def extract_statements(self):
         self.statements = []
         for entry in self.data:
-            try: 
+            try:
                 stmt = self.extract_statement(entry)
             except Exception as e:
                 logger.warning(f"Error processing entry: {e}")
