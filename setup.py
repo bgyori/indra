@@ -23,8 +23,10 @@ def main():
                       'hypothesis': ['gilda>1.0.0'],
                       'geneways': ['stemming', 'nltk<3.6'],
                       'bel': ['pybel>=0.15.0,<0.16.0'],
+                      # texttoknowledgegraph pins lxml==5.2.1 which has no Python
+                      # 3.13 wheels, so we skip it on 3.13 until upstream unpins.
                       'tkg': ['pybel>=0.15.0,<0.16.0',
-                              'texttoknowledgegraph; python_version >= "3.9"'],
+                              'texttoknowledgegraph; python_version >= "3.9" and python_version < "3.13"'],
                       'sbml': ['python-libsbml'],
                       # Tools and analysis
                       'machine': ['pytz', 'tzlocal', 'tweepy', 'pyyaml>=5.1.0',
