@@ -42,9 +42,7 @@ def main():
                               'flask_cors',
                               'docstring-parser',
                               'gunicorn'],
-                      # scikit-learn 1.5.0 breaks DisambManager.run_adeft_disambiguation
-                      # see: https://github.com/gyorilab/adeft/issues/80
-                      'sklearn_belief': ['scikit-learn<1.5.0'],
+                      'sklearn_belief': ['scikit-learn'],
                       'owl': ['pronto'],
                       'tests':
                         ['pytest',
