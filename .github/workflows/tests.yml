@@ -30,7 +30,8 @@ jobs:
         sudo apt-get update
         sudo apt-get install libstdc++6 graphviz python3-dev libgraphviz-dev pkg-config
         # Install test/CI-specific dependencies not covered elsewhere
-        pip install --upgrade pip setuptools wheel
+        # setuptools 81+ drops pkg_resources, which pybel 0.15.x still imports.
+        pip install --upgrade pip "setuptools<81" wheel
         pip install pytest pytest-cov pydot jsonschema awscli pycodestyle
         mkdir -p $HOME/.pybel/data
         wget -nv https://bigmech.s3.amazonaws.com/travis/pybel_cache.db -O $HOME/.pybel/data/pybel_cache.db
